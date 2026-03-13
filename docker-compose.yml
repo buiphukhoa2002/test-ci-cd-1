@@ -1,0 +1,7 @@
+version: "3"
+services:
+  build-html:
+    container_name: cons-html
+    build: .
+    ports:
+      - 3001:80

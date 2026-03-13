@@ -1,0 +1,17 @@
+name: deploy to vps
+on:
+    workflow_dispatch:
+
+# create a sample for now
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
+
+            - name: Deploy to VPS
+              run: |
+                echo "Deploying to VPS..."
+                
+
