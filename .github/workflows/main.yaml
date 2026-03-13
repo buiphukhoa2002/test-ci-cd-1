@@ -1,0 +1,17 @@
+name: demo
+on:
+    workflow_dispatch:
+
+jobs:
+    job_A:
+        runs-on: ubuntu-latest
+        steps:
+            - run: echo "This is job A"
+    job_B:
+        runs-on: ubuntu-latest
+        steps:
+            - run: df -h
+    job_C:
+        runs-on: ubuntu-latest
+        steps:
+            - run: free -h # Show memory usage
