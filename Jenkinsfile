@@ -4,6 +4,7 @@ pipeline {
         stage('Restart Container') {
             steps {
                 withCredentials([
+                    sshUserPrivateKey(credentialsId: 'SSH_KEY', keyFileVariable: 'KEY', usernameVariable: 'SSH_USER'),
                     string(credentialsId: 'VPS_HOST', variable: 'VPS_HOST')
                 ]) {
                     sshagent(credentials: ['SSH_KEY']) {
