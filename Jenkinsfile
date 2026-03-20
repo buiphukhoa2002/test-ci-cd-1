@@ -8,7 +8,6 @@ pipeline {
                     string(credentialsId: 'VPS_HOST', variable: 'VPS_HOST')
                 ]) {
                     sh '''
-                        chmod 600 "$KEY"
                         ssh -o StrictHostKeyChecking=no -i "$KEY" "$SSH_USER"@"$VPS_HOST" '
                             cd /root/test-ci-cd-1 &&
                             git pull &&
