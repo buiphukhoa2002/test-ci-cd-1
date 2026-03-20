@@ -1,13 +1,25 @@
 pipeline {
     agent any
+    environment {
+        DEPLOY_PATH = '/root/test-ci-cd-1'
+    }
     stages {
-        stage('Hello') {
+        stage('Restart Container') {
             steps {
                 withCredentials([
-                    usernamePassword(credentialsId:'user_pass_id1', usernameVariable:'USER', passwordVariable:'PASS'),
-                    string(credentialsId:'secret_id1', variable: 'VARS')
-                ]) {
-                    echo " ${USER} -- ${PASS} -- ${VARS} "
+                    sshUserPrivateKey(credentialsId: 'SSH_KEY', keyFileVariable: 'KEY', usernameVariable: 'SSH_USER'),
+                    string(credentialsId: 'VPS_HOST', variable: 'VPS_HOST')
+                ])
+                {
+                    sh """
+                        ssh -o StrictHostKeyChecking=no -i ${KEY} ${SSH_USER}@${VPS_HOST}
+                        '
+                            cd ${DEPLOY_PATH} && git pull
+                            docker-compose down
+                            docker-compose build
+                            docker-compose up -d
+                        '
+                    """
                 }
             }
         }
